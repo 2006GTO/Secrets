@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a  class="navbar-brand">Dojo Secrets</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                     <li><a asp-area="" asp-controller="Home" asp-action="Secrets">Post a Secret</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<table class="table">
+<thead>
+    <tr>
+        <th><h1>Most Popular Secrets</h1></th>
+    </tr>
+</thead>
+<tbody>
+    @foreach(var i in ViewBag.secrets){
+    <tr>
+        <td>@i.Text</td>
+        <td>@i.Ago</td>
+        <td>@i.Likes.Count Likes</td>  @if(ViewBag.id == @i.Userid){
+            <td>You posted this...<a href="Delete/@i.Id/popular">Delete</a></td>
+        }
+        else{ 
+            int Count = 0;
+            @foreach(var j in @i.Likes){
+                @if(@j.Userid == ViewBag.id){
+                    Count = 1;
+                }
+            }
+            if(Count == 1){
+                <td>You liked this!!!</td>
+            }
+            else {
+                <td><a href="Like/@i.Id/popular">Like!!!</a></td>
+            }
+        }
+    </tr>
+        }
+</tbody>
+</table>
